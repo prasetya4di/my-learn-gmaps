@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbStiki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STIKI" />
+
+        <RadioButton
+            android:id="@+id/rbAlunAlun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alun-Alun Malang" />
+
+        <RadioButton
+            android:id="@+id/rbMuseumBrawijaya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Museum Brawijaya" />
+
+        <RadioButton
+            android:id="@+id/rbMatos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Malang Town Square" />
+
+        <RadioButton
+            android:id="@+id/rbMog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mall Olympic Garden" />
+    </RadioGroup>
 
     <include layout="@layout/activity_maps" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
