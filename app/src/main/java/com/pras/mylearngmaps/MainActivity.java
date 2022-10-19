@@ -34,6 +34,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap.addMarker(new MarkerOptions()
                 .position(myHome)
                 .title("Marker on myHome"));
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(myHome));
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myHome, 15));
     }
 }
