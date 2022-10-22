@@ -2,6 +2,7 @@ package com.pras.mylearngmaps;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private RadioGroup rgTopLocation;
     private LatLng locStiki, locAlunAlun, locMuseumBrawijaya, locMatos, locMog, currentLoc;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private ImageButton btnCurrentLocation;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
 
         rgTopLocation = findViewById(R.id.rgTopLocation);
+        btnCurrentLocation = findViewById(R.id.btnCurrentLocation);
         locStiki = new LatLng(-7.9662032, 112.6076907);
         locAlunAlun = new LatLng(-7.9824631, 112.63088185731061);
         locMuseumBrawijaya = new LatLng(-7.9719815, 112.6208468);
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         moveCamera(locStiki);
                     }
                 });
+
+        btnCurrentLocation.setOnClickListener(view -> {
+            moveCamera(currentLoc);
+        });
     }
 
     private void checkDistance(@NonNull LatLng location, String locName) {
