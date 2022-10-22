@@ -3,6 +3,7 @@ package com.pras.mylearngmaps;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +17,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap gMap;
     private RadioGroup rgTopLocation;
-    private LatLng locStiki, locAlunAlun, locMuseumBrawijaya, locMatos, locMog;
+    private LatLng locStiki, locAlunAlun, locMuseumBrawijaya, locMatos, locMog, currentLoc;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     @SuppressLint("MissingPermission")
@@ -45,18 +47,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         rgTopLocation.setOnCheckedChangeListener((radioGroup, id) -> {
             switch (id) {
                 case R.id.rbStiki:
+                    checkDistance(locStiki, getString(R.string.stiki_text));
                     moveCamera(locStiki);
                     break;
                 case R.id.rbAlunAlun:
+                    checkDistance(locAlunAlun, getString(R.string.alun_alun_text));
                     moveCamera(locAlunAlun);
                     break;
                 case R.id.rbMuseumBrawijaya:
+                    checkDistance(locMuseumBrawijaya, getString(R.string.museum_brawijaya_text));
                     moveCamera(locMuseumBrawijaya);
                     break;
                 case R.id.rbMatos:
+                    checkDistance(locMatos, getString(R.string.matos_text));
                     moveCamera(locMatos);
                     break;
                 case R.id.rbMog:
+                    checkDistance(locMog, getString(R.string.mog_text));
                     moveCamera(locMog);
                     break;
             }
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
-                        LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
+                        currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
                         gMap.addMarker(new MarkerOptions()
                                         .position(currentLoc)
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
@@ -77,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         moveCamera(locStiki);
                     }
                 });
+    }
+
+    private void checkDistance(@NonNull LatLng location, String locName) {
+        double distance = SphericalUtil.computeDistanceBetween(currentLoc, location) / 1000;
+
+        Toast.makeText(this, getString(R.string.distance_message_text, locName, distance), Toast.LENGTH_SHORT).show();
     }
 
     @Override
