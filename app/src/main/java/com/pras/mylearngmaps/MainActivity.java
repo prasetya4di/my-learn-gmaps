@@ -1,5 +1,6 @@
 package com.pras.mylearngmaps;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -19,7 +20,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.util.List;
+
+@SuppressLint("MissingPermission")
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap gMap;
@@ -28,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ImageButton btnCurrentLocation;
 
-    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,21 +80,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        fusedLocationProviderClient
-                .getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    if (location != null) {
-                        currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-                        gMap.addMarker(new MarkerOptions()
-                                        .position(currentLoc)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                        .title("User Current Location"))
-                                .showInfoWindow();
-                        moveCamera(currentLoc);
-                    } else {
-                        moveCamera(locStiki);
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            getUserCurrentLocation();
+                        }
                     }
-                });
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
 
         btnCurrentLocation.setOnClickListener(view -> {
             moveCamera(currentLoc);
@@ -102,7 +112,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
+        setAllMarker();
+    }
 
+    private void moveCamera(LatLng loc) {
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+    }
+
+    private void setAllMarker() {
         gMap.addMarker(new MarkerOptions().position(locStiki));
         gMap.addMarker(new MarkerOptions().position(locAlunAlun));
         gMap.addMarker(new MarkerOptions().position(locMuseumBrawijaya));
@@ -110,7 +127,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap.addMarker(new MarkerOptions().position(locMog));
     }
 
-    private void moveCamera(LatLng loc) {
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+    private void getUserCurrentLocation() {
+        fusedLocationProviderClient
+                .getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
+                        gMap.addMarker(new MarkerOptions()
+                                        .position(currentLoc)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                        .title("User Current Location"))
+                                .showInfoWindow();
+                        moveCamera(currentLoc);
+                    } else {
+                        moveCamera(locStiki);
+                    }
+                });
     }
 }
