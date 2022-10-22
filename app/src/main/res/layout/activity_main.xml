@@ -3,44 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RadioGroup
-        android:id="@+id/rgTopLocation"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/rbStiki"
+        <RadioGroup
+            android:id="@+id/rgTopLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/stiki_text" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/rbAlunAlun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/alun_alun_text" />
+            <RadioButton
+                android:id="@+id/rbStiki"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stiki_text" />
 
-        <RadioButton
-            android:id="@+id/rbMuseumBrawijaya"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/museum_brawijaya_text" />
+            <RadioButton
+                android:id="@+id/rbAlunAlun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alun_alun_text" />
 
-        <RadioButton
-            android:id="@+id/rbMatos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/matos_text" />
+            <RadioButton
+                android:id="@+id/rbMuseumBrawijaya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/museum_brawijaya_text" />
 
-        <RadioButton
-            android:id="@+id/rbMog"
-            android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/rbMatos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/matos_text" />
+
+            <RadioButton
+                android:id="@+id/rbMog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mog_text" />
+        </RadioGroup>
+
+        <ImageButton
+            android:id="@+id/btnCurrentLocation"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mog_text" />
-    </RadioGroup>
+            android:src="@drawable/ic_current_location"
+            app:layout_constraintBottom_toBottomOf="@id/rgTopLocation"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <include layout="@layout/activity_maps" />
 
