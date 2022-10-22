@@ -15,31 +15,31 @@
             android:id="@+id/rbStiki"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="STIKI" />
+            android:text="@string/stiki_text" />
 
         <RadioButton
             android:id="@+id/rbAlunAlun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alun-Alun Malang" />
+            android:text="@string/alun_alun_text" />
 
         <RadioButton
             android:id="@+id/rbMuseumBrawijaya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Museum Brawijaya" />
+            android:text="@string/museum_brawijaya_text" />
 
         <RadioButton
             android:id="@+id/rbMatos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Malang Town Square" />
+            android:text="@string/matos_text" />
 
         <RadioButton
             android:id="@+id/rbMog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mall Olympic Garden" />
+            android:text="@string/mog_text" />
     </RadioGroup>
 
     <include layout="@layout/activity_maps" />

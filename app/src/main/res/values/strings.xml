@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyLearnGMaps</string>
+    <string name="distance_message_text">Jarak dari sini ke %1$s : %2$f KM</string>
+    <string name="stiki_text">STIKI</string>
+    <string name="alun_alun_text">Alun-Alun Malang</string>
+    <string name="museum_brawijaya_text">Museum Brawijaya</string>
+    <string name="matos_text">Malang Town Square</string>
+    <string name="mog_text">Mall Olympic Garden</string>
 </resources>
